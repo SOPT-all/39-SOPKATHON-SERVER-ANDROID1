@@ -6,7 +6,7 @@
 
 | **[박다윤](https://github.com/DAYOUN1205)** | **[장현준](https://github.com/guswnsj0112)** | **[조서연](https://github.com/csyjulia0478)** |
 |:-------------------------------------------:|:--------------------------------------------:|:---------------------------------------------:|
-|           사진이 들어갈 칸입니다            |            사진이 들어갈 칸입니다            |            사진이 들어갈 칸입니다             |
+| <img src="https://i.pinimg.com/originals/df/0c/4f/df0c4fb7805fd6c03138e3c38d552133.gif" width="170" alt="박다윤"> | <img src="https://media1.tenor.com/m/-kZbu04j6HIAAAAC/obanai-iguro.gif" width="170" alt="장현준"> | <img src="https://i.pinimg.com/originals/10/5c/31/105c311b3064c379113654bd338c6a7e.gif" width="170" alt="조서연"> |
 |             `Server Developer`              |                `Server Lead`                 |              `Server Developer`               |
 
 ## 🛠️ 서버 기술 스택 및 선정 이유
