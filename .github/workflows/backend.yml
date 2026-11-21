@@ -38,6 +38,8 @@ jobs:
       SPRING_DATASOURCE_URL: jdbc:mysql://127.0.0.1:3306/sopkathon_test?sslMode=REQUIRED
       SPRING_DATASOURCE_USERNAME: ci
       SPRING_DATASOURCE_PASSWORD: ci-password
+      AWS_S3_BUCKET: sopkathon-android1-files-20261121
+      AWS_REGION: ap-southeast-2
 
     steps:
       - uses: actions/checkout@v6
