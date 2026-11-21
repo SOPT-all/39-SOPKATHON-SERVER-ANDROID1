@@ -1,9 +1,8 @@
 package sopt._39sopkathonserverandroid1.domain.mission.controller;
 
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.Positive;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,7 +27,7 @@ public class MissionController implements MissionApi {
     private final MissionService missionService;
 
     @Override
-    @PostMapping("/v1/users/{userId}/missions")
+    @PostMapping(path = "/v1/users/{userId}/missions", consumes = MediaType.APPLICATION_JSON_VALUE)
     public CommonResponse<MissionCreateResponse> createMission(
             @PathVariable("userId") Long userId,
             @RequestBody MissionCreateRequest request
@@ -66,8 +65,8 @@ public class MissionController implements MissionApi {
     @Override
     @PostMapping("/v1/mission-baskets/{missionBasketId}/completion")
     public CommonResponse<MissionCompletionResponse> completeMission(
-            @PathVariable @Positive(message = "missionBasketId는 양수여야 합니다.") Long missionBasketId,
-            @Valid @RequestBody MissionCompletionRequest request
+            @PathVariable("missionBasketId") Long missionBasketId,
+            @RequestBody MissionCompletionRequest request
     ) {
         MissionCompletionResponse response = missionService.completeMission(missionBasketId, request);
         return CommonResponse.success(MissionSuccessCode.MISSION_COMPLETED, response);

@@ -2,6 +2,9 @@ package sopt._39sopkathonserverandroid1.domain.mission.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
@@ -26,7 +29,24 @@ import sopt._39sopkathonserverandroid1.global.swagger.ApiExceptions;
 @Tag(name = "미션", description = "미션 조회 및 수행 API")
 public interface MissionApi {
 
-    @Operation(summary = "미션 제작", description = "업로드한 이미지 키와 미션 내용을 등록합니다.")
+    @Operation(
+            summary = "미션 제작",
+            description = "사진 한 장을 POST /v1/images로 업로드한 뒤, 받은 imageKey와 미션 제목, 소개, 진행 방법을 등록합니다."
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "미션 등록 성공",
+            useReturnTypeSchema = true,
+            content = @Content(mediaType = "application/json", examples = @ExampleObject(value = """
+                    {
+                      "status": 200,
+                      "code": "MISSION_CREATED",
+                      "message": "미션을 등록했습니다.",
+                      "data": { "missionId": 3 }
+                    }
+                    """))
+    )
+    @ApiResponse(responseCode = "415", description = "application/json 형식의 요청이 필요합니다.")
     @ApiExceptions(UserNotFoundException.class)
     CommonResponse<MissionCreateResponse> createMission(
             @Parameter(description = "미션을 제작하는 사용자 ID", example = "1")
@@ -64,7 +84,7 @@ public interface MissionApi {
     CommonResponse<MissionCompletionResponse> completeMission(
             @Parameter(description = "완료할 미션 바구니 ID", required = true)
             @PathVariable("missionBasketId")
-            Long missionBasketId,
-            MissionCompletionRequest request
+            @Positive(message = "missionBasketId는 양수여야 합니다.") Long missionBasketId,
+            @Valid MissionCompletionRequest request
     );
 }
