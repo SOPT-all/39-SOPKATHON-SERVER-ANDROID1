@@ -19,4 +19,14 @@ public interface MissionBasketRepository extends JpaRepository<MissionBasket, Lo
             order by mission.createdAt desc, mission.id desc
             """)
     List<MissionBasket> findIncompleteByUserId(@Param("userId") Long userId);
+
+    @Query("""
+            select basket
+            from MissionBasket basket
+            join fetch basket.mission mission
+            where basket.userId = :userId
+              and basket.completedAt is not null
+            order by mission.createdAt desc, mission.id desc
+            """)
+    List<MissionBasket> findCompletedByUserId(@Param("userId") Long userId);
 }

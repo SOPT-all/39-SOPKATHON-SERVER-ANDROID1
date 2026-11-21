@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import sopt._39sopkathonserverandroid1.domain.mission.code.MissionBasketSuccessCode;
 import sopt._39sopkathonserverandroid1.domain.mission.dto.request.MissionBasketCreateRequest;
-import sopt._39sopkathonserverandroid1.domain.mission.dto.response.IncompleteMissionResponse;
 import sopt._39sopkathonserverandroid1.domain.mission.dto.response.MissionBasketCreateResponse;
+import sopt._39sopkathonserverandroid1.domain.mission.dto.response.MyMissionResponse;
 import sopt._39sopkathonserverandroid1.domain.mission.service.MissionBasketService;
 import sopt._39sopkathonserverandroid1.global.dto.CommonResponse;
 
@@ -36,10 +36,19 @@ public class MissionBasketController implements MissionBasketApi {
 
     @Override
     @GetMapping("/v1/users/{userId}/missions/incomplete")
-    public CommonResponse<List<IncompleteMissionResponse>> findIncompleteMissions(
+    public CommonResponse<List<MyMissionResponse>> findIncompleteMissions(
             @PathVariable("userId") Long userId
     ) {
-        List<IncompleteMissionResponse> response = missionBasketService.findIncompleteMissions(userId);
+        List<MyMissionResponse> response = missionBasketService.findIncompleteMissions(userId);
         return CommonResponse.success(MissionBasketSuccessCode.INCOMPLETE_MISSIONS_FETCHED, response);
+    }
+
+    @Override
+    @GetMapping("/v1/users/{userId}/missions/completed")
+    public CommonResponse<List<MyMissionResponse>> findCompletedMissions(
+            @PathVariable("userId") Long userId
+    ) {
+        List<MyMissionResponse> response = missionBasketService.findCompletedMissions(userId);
+        return CommonResponse.success(MissionBasketSuccessCode.COMPLETED_MISSIONS_FETCHED, response);
     }
 }
