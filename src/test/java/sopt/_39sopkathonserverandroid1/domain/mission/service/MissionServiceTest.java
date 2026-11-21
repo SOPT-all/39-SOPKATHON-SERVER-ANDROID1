@@ -6,9 +6,12 @@ import static org.mockito.Mockito.when;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
+import software.amazon.awssdk.services.s3.S3Client;
 import sopt._39sopkathonserverandroid1.domain.image.service.MissionImageUrlService;
+import sopt._39sopkathonserverandroid1.domain.mission.repository.MissionBasketRepository;
 import sopt._39sopkathonserverandroid1.domain.mission.dto.response.MissionListResponse;
 import sopt._39sopkathonserverandroid1.domain.mission.repository.MissionRepository;
+import sopt._39sopkathonserverandroid1.domain.review.repository.ReviewRepository;
 import sopt._39sopkathonserverandroid1.domain.user.repository.UserRepository;
 
 class MissionServiceTest {
@@ -16,7 +19,13 @@ class MissionServiceTest {
     private final MissionRepository missionRepository = mock(MissionRepository.class);
     private final MissionImageUrlService missionImageUrlService = mock(MissionImageUrlService.class);
     private final MissionService missionService = new MissionService(
-            missionRepository, mock(UserRepository.class), missionImageUrlService
+            missionRepository,
+            mock(UserRepository.class),
+            missionImageUrlService,
+            mock(MissionBasketRepository.class),
+            mock(ReviewRepository.class),
+            mock(MissionImageVerifier.class),
+            mock(S3Client.class)
     );
 
     @Test

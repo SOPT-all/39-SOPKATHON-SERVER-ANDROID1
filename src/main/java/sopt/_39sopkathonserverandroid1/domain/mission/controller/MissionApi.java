@@ -7,10 +7,17 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import java.util.List;
 import org.springframework.web.bind.annotation.PathVariable;
+import sopt._39sopkathonserverandroid1.domain.mission.dto.request.MissionCompletionRequest;
 import sopt._39sopkathonserverandroid1.domain.mission.dto.request.MissionCreateRequest;
+import sopt._39sopkathonserverandroid1.domain.mission.dto.response.MissionCompletionResponse;
 import sopt._39sopkathonserverandroid1.domain.mission.dto.response.MissionCreateResponse;
 import sopt._39sopkathonserverandroid1.domain.mission.dto.response.MissionDetailResponse;
 import sopt._39sopkathonserverandroid1.domain.mission.dto.response.MissionListResponse;
+import sopt._39sopkathonserverandroid1.domain.mission.exception.MissionAiTimeoutException;
+import sopt._39sopkathonserverandroid1.domain.mission.exception.MissionAiUnavailableException;
+import sopt._39sopkathonserverandroid1.domain.mission.exception.MissionAlreadyCompletedException;
+import sopt._39sopkathonserverandroid1.domain.mission.exception.MissionBasketNotFoundException;
+import sopt._39sopkathonserverandroid1.domain.mission.exception.MissionImageNotFoundException;
 import sopt._39sopkathonserverandroid1.domain.mission.exception.MissionNotFoundException;
 import sopt._39sopkathonserverandroid1.domain.user.exception.UserNotFoundException;
 import sopt._39sopkathonserverandroid1.global.dto.CommonResponse;
@@ -41,5 +48,23 @@ public interface MissionApi {
     CommonResponse<MissionDetailResponse> getMissionDetail(
             @Parameter(description = "조회할 미션 ID", required = true)
             @PathVariable("missionId") Long missionId
+    );
+
+    @Operation(
+            summary = "미션 수행 완료",
+            description = "인증 사진을 Gemini로 판정하고 PASS/FAIL과 관계없이 후기와 완료 상태를 저장합니다."
+    )
+    @ApiExceptions({
+            MissionBasketNotFoundException.class,
+            MissionImageNotFoundException.class,
+            MissionAlreadyCompletedException.class,
+            MissionAiTimeoutException.class,
+            MissionAiUnavailableException.class
+    })
+    CommonResponse<MissionCompletionResponse> completeMission(
+            @Parameter(description = "완료할 미션 바구니 ID", required = true)
+            @PathVariable("missionBasketId")
+            Long missionBasketId,
+            MissionCompletionRequest request
     );
 }
