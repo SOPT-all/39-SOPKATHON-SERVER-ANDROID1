@@ -12,6 +12,10 @@ public enum MissionErrorCode implements ErrorCode {
     MISSION_NOT_FOUND(
             HttpStatus.NOT_FOUND,
             "존재하지 않는 미션입니다."
+    ),
+    MISSION_ALREADY_IN_BASKET(
+            HttpStatus.CONFLICT,
+            "이미 내 도전에 담긴 미션입니다."
     );
 
     private final HttpStatus status;
