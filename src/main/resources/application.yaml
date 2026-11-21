@@ -3,3 +3,7 @@ spring:
     name: 39-SOPKATHON-SERVER-ANDROID1
 server:
   forward-headers-strategy: native
+aws:
+  s3:
+    bucket: ${AWS_S3_BUCKET}
+    region: ${AWS_REGION}
