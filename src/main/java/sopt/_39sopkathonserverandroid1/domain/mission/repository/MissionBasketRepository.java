@@ -8,6 +8,8 @@ import sopt._39sopkathonserverandroid1.domain.mission.entity.MissionBasket;
 
 public interface MissionBasketRepository extends JpaRepository<MissionBasket, Long> {
 
+    boolean existsByUserIdAndMissionId(Long userId, Long missionId);
+
     @Query("""
             select basket
             from MissionBasket basket

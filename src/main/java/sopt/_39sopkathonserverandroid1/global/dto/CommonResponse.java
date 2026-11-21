@@ -12,7 +12,7 @@ public record CommonResponse<T>(
 ) {
 
     public static <T> CommonResponse<T> success(SuccessCode successCode, T data) {
-        return new CommonResponse<>(200, successCode.name(), successCode.getMessage(), data);
+        return new CommonResponse<>(successCode.getStatus().value(), successCode.name(), successCode.getMessage(), data);
     }
 
     public static CommonResponse<Void> success(SuccessCode successCode) {
