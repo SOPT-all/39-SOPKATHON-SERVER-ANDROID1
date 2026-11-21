@@ -5,10 +5,12 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
+import java.util.List;
 import org.springframework.web.bind.annotation.PathVariable;
 import sopt._39sopkathonserverandroid1.domain.mission.dto.request.MissionCreateRequest;
 import sopt._39sopkathonserverandroid1.domain.mission.dto.response.MissionCreateResponse;
 import sopt._39sopkathonserverandroid1.domain.mission.dto.response.MissionDetailResponse;
+import sopt._39sopkathonserverandroid1.domain.mission.dto.response.MissionListResponse;
 import sopt._39sopkathonserverandroid1.domain.mission.exception.MissionNotFoundException;
 import sopt._39sopkathonserverandroid1.domain.user.exception.UserNotFoundException;
 import sopt._39sopkathonserverandroid1.global.dto.CommonResponse;
@@ -24,6 +26,12 @@ public interface MissionApi {
             @Positive(message = "유효하지 않은 값입니다.") Long userId,
             @Valid MissionCreateRequest request
     );
+
+    @Operation(
+            summary = "홈 화면 전체 미션 목록 조회",
+            description = "전체 미션을 Hype 개수 내림차순으로 조회합니다. Hype 개수가 같으면 미션 ID 내림차순으로 정렬합니다."
+    )
+    CommonResponse<List<MissionListResponse>> findMissions();
 
     @Operation(
             summary = "미션 상세 조회",

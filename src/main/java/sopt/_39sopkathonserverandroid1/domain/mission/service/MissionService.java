@@ -1,5 +1,6 @@
 package sopt._39sopkathonserverandroid1.domain.mission.service;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -7,6 +8,7 @@ import sopt._39sopkathonserverandroid1.domain.image.service.MissionImageUrlServi
 import sopt._39sopkathonserverandroid1.domain.mission.dto.request.MissionCreateRequest;
 import sopt._39sopkathonserverandroid1.domain.mission.dto.response.MissionCreateResponse;
 import sopt._39sopkathonserverandroid1.domain.mission.dto.response.MissionDetailResponse;
+import sopt._39sopkathonserverandroid1.domain.mission.dto.response.MissionListResponse;
 import sopt._39sopkathonserverandroid1.domain.mission.entity.Mission;
 import sopt._39sopkathonserverandroid1.domain.mission.exception.MissionNotFoundException;
 import sopt._39sopkathonserverandroid1.domain.mission.repository.MissionRepository;
@@ -32,6 +34,17 @@ public class MissionService {
                 userId, request.title(), request.description(), request.instructions(), request.imageKey()
         );
         return MissionCreateResponse.of(missionRepository.save(mission));
+    }
+
+    public List<MissionListResponse> findMissions() {
+        return missionRepository.findAllOrderByHypeCountDesc().stream()
+                .map(mission -> MissionListResponse.of(
+                        mission.getMissionId(),
+                        missionImageUrlService.resolve(mission.getImageUrl()),
+                        mission.getTitle(),
+                        mission.getHypeCount()
+                ))
+                .toList();
     }
 
     public MissionDetailResponse getMissionDetail(Long missionId) {

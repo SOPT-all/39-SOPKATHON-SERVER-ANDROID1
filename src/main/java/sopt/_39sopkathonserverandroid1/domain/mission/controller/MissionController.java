@@ -1,5 +1,6 @@
 package sopt._39sopkathonserverandroid1.domain.mission.controller;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,6 +11,7 @@ import sopt._39sopkathonserverandroid1.domain.mission.code.MissionSuccessCode;
 import sopt._39sopkathonserverandroid1.domain.mission.dto.request.MissionCreateRequest;
 import sopt._39sopkathonserverandroid1.domain.mission.dto.response.MissionCreateResponse;
 import sopt._39sopkathonserverandroid1.domain.mission.dto.response.MissionDetailResponse;
+import sopt._39sopkathonserverandroid1.domain.mission.dto.response.MissionListResponse;
 import sopt._39sopkathonserverandroid1.domain.mission.exception.MissionNotFoundException;
 import sopt._39sopkathonserverandroid1.domain.mission.service.MissionService;
 import sopt._39sopkathonserverandroid1.global.dto.CommonResponse;
@@ -29,6 +31,17 @@ public class MissionController implements MissionApi {
     ) {
         MissionCreateResponse response = missionService.createMission(userId, request);
         return CommonResponse.success(MissionSuccessCode.MISSION_CREATED, response);
+    }
+
+    @Override
+    @GetMapping("/missions")
+    public CommonResponse<List<MissionListResponse>> findMissions() {
+        List<MissionListResponse> response = missionService.findMissions();
+
+        return CommonResponse.success(
+                MissionSuccessCode.MISSION_LIST_FETCHED,
+                response
+        );
     }
 
     @Override
