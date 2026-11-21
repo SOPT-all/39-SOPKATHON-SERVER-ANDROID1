@@ -10,8 +10,8 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import java.util.List;
 import sopt._39sopkathonserverandroid1.domain.mission.dto.request.MissionBasketCreateRequest;
-import sopt._39sopkathonserverandroid1.domain.mission.dto.response.IncompleteMissionResponse;
 import sopt._39sopkathonserverandroid1.domain.mission.dto.response.MissionBasketCreateResponse;
+import sopt._39sopkathonserverandroid1.domain.mission.dto.response.MyMissionResponse;
 import sopt._39sopkathonserverandroid1.domain.mission.exception.MissionAlreadyInBasketException;
 import sopt._39sopkathonserverandroid1.domain.mission.exception.MissionNotFoundException;
 import sopt._39sopkathonserverandroid1.domain.user.exception.UserNotFoundException;
@@ -43,11 +43,21 @@ public interface MissionBasketApi {
     );
 
     @Operation(
-            summary = "내 미완료 미션 목록 조회",
+            summary = "내 미션 목록 조회 - 미완료",
             description = "해당 사용자가 담은 미완료 미션을 미션 등록일 최신순으로 조회합니다."
     )
     @ApiExceptions(UserNotFoundException.class)
-    CommonResponse<List<IncompleteMissionResponse>> findIncompleteMissions(
+    CommonResponse<List<MyMissionResponse>> findIncompleteMissions(
+            @Parameter(description = "사용자 ID", example = "1")
+            @Positive(message = "유효하지 않은 값입니다.") Long userId
+    );
+
+    @Operation(
+            summary = "내 미션 목록 조회 - 완료",
+            description = "해당 사용자가 인증을 완료한 미션을 미션 등록일 최신순으로 조회합니다."
+    )
+    @ApiExceptions(UserNotFoundException.class)
+    CommonResponse<List<MyMissionResponse>> findCompletedMissions(
             @Parameter(description = "사용자 ID", example = "1")
             @Positive(message = "유효하지 않은 값입니다.") Long userId
     );

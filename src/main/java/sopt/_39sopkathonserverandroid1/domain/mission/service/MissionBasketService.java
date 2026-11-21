@@ -7,8 +7,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sopt._39sopkathonserverandroid1.domain.image.service.MissionImageUrlService;
-import sopt._39sopkathonserverandroid1.domain.mission.dto.response.IncompleteMissionResponse;
 import sopt._39sopkathonserverandroid1.domain.mission.dto.response.MissionBasketCreateResponse;
+import sopt._39sopkathonserverandroid1.domain.mission.dto.response.MyMissionResponse;
 import sopt._39sopkathonserverandroid1.domain.mission.entity.MissionBasket;
 import sopt._39sopkathonserverandroid1.domain.mission.exception.MissionAlreadyInBasketException;
 import sopt._39sopkathonserverandroid1.domain.mission.exception.MissionNotFoundException;
@@ -56,15 +56,30 @@ public class MissionBasketService {
         }
     }
 
-    public List<IncompleteMissionResponse> findIncompleteMissions(Long userId) {
+    public List<MyMissionResponse> findIncompleteMissions(Long userId) {
+        validateUserExists(userId);
+
+        return missionBasketRepository.findIncompleteByUserId(userId).stream()
+                .map(this::toMyMissionResponse)
+                .toList();
+    }
+
+    public List<MyMissionResponse> findCompletedMissions(Long userId) {
+        validateUserExists(userId);
+
+        return missionBasketRepository.findCompletedByUserId(userId).stream()
+                .map(this::toMyMissionResponse)
+                .toList();
+    }
+
+    private MyMissionResponse toMyMissionResponse(MissionBasket basket) {
+        String imageUrl = missionImageUrlService.resolve(basket.getMission().getImageUrl());
+        return MyMissionResponse.of(basket, imageUrl);
+    }
+
+    private void validateUserExists(Long userId) {
         if (!userRepository.existsById(userId)) {
             throw new UserNotFoundException();
         }
-
-        return missionBasketRepository.findIncompleteByUserId(userId).stream()
-                .map(basket -> IncompleteMissionResponse.of(
-                        basket, missionImageUrlService.resolve(basket.getMission().getImageUrl())
-                ))
-                .toList();
     }
 }

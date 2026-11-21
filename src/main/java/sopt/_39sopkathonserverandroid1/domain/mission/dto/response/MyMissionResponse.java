@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import sopt._39sopkathonserverandroid1.domain.mission.entity.Mission;
 import sopt._39sopkathonserverandroid1.domain.mission.entity.MissionBasket;
 
-public record IncompleteMissionResponse(
+public record MyMissionResponse(
         @Schema(description = "미션 담기 기록 ID", example = "12")
         Long missionBasketId,
 
@@ -23,9 +23,9 @@ public record IncompleteMissionResponse(
         LocalDateTime createdAt
 ) {
 
-    public static IncompleteMissionResponse of(MissionBasket basket, String imageUrl) {
+    public static MyMissionResponse of(MissionBasket basket, String imageUrl) {
         Mission mission = basket.getMission();
-        return new IncompleteMissionResponse(
+        return new MyMissionResponse(
                 basket.getId(),
                 basket.getMissionId(),
                 mission.getTitle(),
