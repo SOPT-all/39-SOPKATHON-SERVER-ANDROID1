@@ -38,7 +38,7 @@ public class MissionController implements MissionApi {
     }
 
     @Override
-    @GetMapping("/missions")
+    @GetMapping("/v1/missions")
     public CommonResponse<List<MissionListResponse>> findMissions() {
         List<MissionListResponse> response = missionService.findMissions();
 
@@ -49,7 +49,7 @@ public class MissionController implements MissionApi {
     }
 
     @Override
-    @GetMapping("/missions/{missionId}")
+    @GetMapping("/v1/missions/{missionId}")
     @ApiExceptions({MissionNotFoundException.class})
     public CommonResponse<MissionDetailResponse> getMissionDetail(
             @PathVariable("missionId") Long missionId

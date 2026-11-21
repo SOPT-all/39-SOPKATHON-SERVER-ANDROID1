@@ -23,12 +23,14 @@ import sopt._39sopkathonserverandroid1.global.entity.BaseTimeEntity;
 @Table(
         name = "mission_basket",
         uniqueConstraints = @UniqueConstraint(
-                name = "uk_mission_basket_user_mission",
+                name = MissionBasket.USER_MISSION_UNIQUE_CONSTRAINT,
                 columnNames = {"user_id", "mission_id"}
         )
 )
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MissionBasket extends BaseTimeEntity {
+
+    public static final String USER_MISSION_UNIQUE_CONSTRAINT = "uk_mission_basket_user_mission";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,6 +56,13 @@ public class MissionBasket extends BaseTimeEntity {
 
     @Column(name = "completed_at")
     private LocalDateTime completedAt;
+
+    public static MissionBasket create(Long userId, Long missionId) {
+        MissionBasket basket = new MissionBasket();
+        basket.userId = userId;
+        basket.missionId = missionId;
+        return basket;
+    }
 
     public void complete() {
         this.isCompleted = true;
