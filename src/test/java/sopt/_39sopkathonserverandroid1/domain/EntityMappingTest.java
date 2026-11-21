@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.Column;
 import java.lang.reflect.Constructor;
 import java.util.Arrays;
 import java.util.List;
@@ -97,5 +98,15 @@ class EntityMappingTest {
 
         assertTrue(missionBasket.isCompleted());
         assertNotNull(missionBasket.getCompletedAt());
+    }
+
+    @Test
+    void storesPermanentImageKeyAndLimitsReviewContent() throws NoSuchFieldException {
+        Column imageKey = Review.class.getDeclaredField("imageKey").getAnnotation(Column.class);
+        Column content = Review.class.getDeclaredField("content").getAnnotation(Column.class);
+
+        assertEquals("image_url", imageKey.name());
+        assertFalse(imageKey.nullable());
+        assertEquals(50, content.length());
     }
 }
