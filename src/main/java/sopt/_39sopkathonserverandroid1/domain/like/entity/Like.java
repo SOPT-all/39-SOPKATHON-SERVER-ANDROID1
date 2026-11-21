@@ -46,4 +46,13 @@ public class Like extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "review_id", insertable = false, updatable = false)
     private Review review;
+
+    private Like(Long userId, Long reviewId) {
+        this.userId = userId;
+        this.reviewId = reviewId;
+    }
+
+    public static Like create(Long userId, Long reviewId) {
+        return new Like(userId, reviewId);
+    }
 }
