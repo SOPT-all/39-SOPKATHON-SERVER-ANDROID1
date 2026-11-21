@@ -28,10 +28,13 @@ public class Mission extends BaseTimeEntity {
     @Column(name = "title", nullable = false, length = 200)
     private String title;
 
-    @Column(name = "body", nullable = false, columnDefinition = "TEXT")
-    private String body;
+    @Column(name = "description", nullable = false, columnDefinition = "TEXT")
+    private String description;
 
-    @Column(name = "image_url")
+    @Column(name = "instructions", nullable = false, columnDefinition = "TEXT")
+    private String instructions;
+
+    @Column(name = "image_url", nullable = false)
     private String imageUrl;
 
     @Column(name = "user_id", nullable = false)

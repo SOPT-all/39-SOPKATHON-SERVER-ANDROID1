@@ -15,7 +15,7 @@ public interface MissionBasketApi {
 
     @Operation(
             summary = "내 미완료 미션 목록 조회",
-            description = "해당 사용자가 담은 미션 중 미완료된 미션을 조회합니다."
+            description = "해당 사용자가 담은 미완료 미션을 미션 등록일 최신순으로 조회합니다."
     )
     @ApiExceptions(UserNotFoundException.class)
     CommonResponse<List<IncompleteMissionResponse>> findIncompleteMissions(
