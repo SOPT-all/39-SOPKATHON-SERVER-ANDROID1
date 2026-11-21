@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.HandlerMethodValidationException;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import sopt._39sopkathonserverandroid1.domain.image.code.ImageErrorCode;
 import sopt._39sopkathonserverandroid1.global.code.ErrorCode;
 import sopt._39sopkathonserverandroid1.global.code.GlobalErrorCode;
 import sopt._39sopkathonserverandroid1.global.dto.CommonResponse;
@@ -95,6 +97,17 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .orElse(GlobalErrorCode.INVALID_INPUT.getMessage());
 
         return ResponseEntity.status(status).body(CommonResponse.validationError(message));
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleMaxUploadSizeExceededException(
+            MaxUploadSizeExceededException exception,
+            HttpHeaders headers,
+            HttpStatusCode status,
+            WebRequest request
+    ) {
+        ImageErrorCode errorCode = ImageErrorCode.IMAGE_SIZE_EXCEEDED;
+        return ResponseEntity.status(errorCode.getStatus()).body(CommonResponse.error(errorCode));
     }
 
     // 검증 예외에서 첫 번째 필드 오류 메시지를 꺼내 400 응답 생성
