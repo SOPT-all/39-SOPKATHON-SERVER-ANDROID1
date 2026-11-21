@@ -1,4 +1,5 @@
 spring:
   application:
     name: 39-SOPKATHON-SERVER-ANDROID1
-    forward-headers-strategy: native
+server:
+  forward-headers-strategy: native
