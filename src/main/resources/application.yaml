@@ -3,8 +3,8 @@ spring:
     name: 39-SOPKATHON-SERVER-ANDROID1
   servlet:
     multipart:
-      max-file-size: 10MB
-      max-request-size: 11MB
+      max-file-size: 15MB
+      max-request-size: 16MB
 server:
   forward-headers-strategy: native
 aws:

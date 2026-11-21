@@ -88,7 +88,7 @@ class ImageServiceTest {
     void rejectsOversizedImage() {
         MultipartFile file = mock(MultipartFile.class);
         when(file.isEmpty()).thenReturn(false);
-        when(file.getSize()).thenReturn(10L * 1024 * 1024 + 1);
+        when(file.getSize()).thenReturn(15L * 1024 * 1024 + 1);
 
         assertThrows(ImageSizeExceededException.class, () -> imageService.uploadMissionImage(file));
 

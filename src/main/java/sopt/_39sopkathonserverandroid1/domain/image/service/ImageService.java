@@ -28,7 +28,7 @@ import sopt._39sopkathonserverandroid1.domain.image.exception.ImageUploadFailedE
 @Transactional(readOnly = true)
 public class ImageService {
 
-    private static final long MAX_IMAGE_SIZE = 10L * 1024 * 1024;
+    private static final long MAX_IMAGE_SIZE = 15L * 1024 * 1024;
     private static final Duration IMAGE_URL_EXPIRATION = Duration.ofHours(1);
     private static final Map<String, String> IMAGE_EXTENSIONS = Map.of(
             "image/jpeg", "jpg",
