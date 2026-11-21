@@ -40,7 +40,7 @@ public class Review extends BaseTimeEntity {
     private MissionBasket missionBasket;
 
     // shortcut: 기존 DB의 image_url 컬럼에 imageKey를 저장, 마이그레이션 도입 시 image_key로 변경
-    @Column(name = "image_url", nullable = false)
+    @Column(name = "image_url", nullable = false, length = 2048)
     private String imageKey;
 
     @Column(name = "content", nullable = false, length = 50)

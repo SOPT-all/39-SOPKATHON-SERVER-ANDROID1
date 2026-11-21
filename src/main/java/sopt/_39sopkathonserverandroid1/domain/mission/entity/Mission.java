@@ -34,7 +34,7 @@ public class Mission extends BaseTimeEntity {
     @Column(name = "instructions", nullable = false, columnDefinition = "TEXT")
     private String instructions;
 
-    @Column(name = "image_url", nullable = false)
+    @Column(name = "image_url", nullable = false, length = 2048)
     private String imageUrl;
 
     @Column(name = "user_id", nullable = false)
