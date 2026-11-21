@@ -9,7 +9,8 @@ import sopt._39sopkathonserverandroid1.global.code.SuccessCode;
 public enum MissionSuccessCode implements SuccessCode {
     MISSION_CREATED("미션을 등록했습니다."),
     MISSION_LIST_FETCHED("전체 미션 목록 조회에 성공했습니다."),
-    MISSION_DETAIL_SUCCESS("미션 상세 조회에 성공했습니다.");
+    MISSION_DETAIL_SUCCESS("미션 상세 조회에 성공했습니다."),
+    MISSION_COMPLETED("미션 수행이 완료되었습니다.");
 
     private final String message;
 }

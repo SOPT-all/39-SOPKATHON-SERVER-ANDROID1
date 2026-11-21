@@ -39,9 +39,18 @@ public class Review extends BaseTimeEntity {
     @JoinColumn(name = "mission_basket_id", insertable = false, updatable = false)
     private MissionBasket missionBasket;
 
-    @Column(name = "image_url")
-    private String imageUrl;
+    // shortcut: 기존 DB의 image_url 컬럼에 imageKey를 저장, 마이그레이션 도입 시 image_key로 변경
+    @Column(name = "image_url", nullable = false)
+    private String imageKey;
 
-    @Column(name = "content", nullable = false, length = 200)
+    @Column(name = "content", nullable = false, length = 50)
     private String content;
+
+    public static Review create(Long missionBasketId, String imageKey, String content) {
+        Review review = new Review();
+        review.missionBasketId = missionBasketId;
+        review.imageKey = imageKey;
+        review.content = content;
+        return review;
+    }
 }
