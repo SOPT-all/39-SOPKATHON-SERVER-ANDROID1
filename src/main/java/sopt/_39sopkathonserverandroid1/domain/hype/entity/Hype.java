@@ -43,4 +43,17 @@ public class Hype extends BaseTimeEntity {
     @ColumnDefault("false")
     @Column(name = "is_recommended", nullable = false)
     private boolean isRecommended;
+
+    private Hype(Long missionBasketId) {
+        this.missionBasketId = missionBasketId;
+        this.isRecommended = true;
+    }
+
+    public static Hype create(Long missionBasketId) {
+        return new Hype(missionBasketId);
+    }
+
+    public void toggleRecommendation() {
+        this.isRecommended = !this.isRecommended;
+    }
 }
