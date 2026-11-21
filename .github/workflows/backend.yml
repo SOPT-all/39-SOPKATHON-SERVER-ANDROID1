@@ -18,22 +18,24 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
-      postgres:
-        image: postgres:17
+      mysql:
+        image: mysql:8.4
         env:
-          POSTGRES_DB: sopkathon_test
-          POSTGRES_USER: ci
-          POSTGRES_PASSWORD: ci-password
+          MYSQL_DATABASE: sopkathon_test
+          MYSQL_USER: ci
+          MYSQL_PASSWORD: ci-password
+          MYSQL_ROOT_PASSWORD: ci-root-password
         ports:
-          - "5432:5432"
+          - "3306:3306"
         options: >-
-          --health-cmd "pg_isready -U ci -d sopkathon_test"
+          --health-cmd "mysql --protocol=TCP -h 127.0.0.1 -uci -pci-password -D sopkathon_test -e 'SELECT 1'"
           --health-interval 5s
-          --health-timeout 3s
-          --health-retries 10
+          --health-timeout 5s
+          --health-start-period 15s
+          --health-retries 20
 
     env:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/sopkathon_test
+      SPRING_DATASOURCE_URL: jdbc:mysql://127.0.0.1:3306/sopkathon_test?sslMode=REQUIRED
       SPRING_DATASOURCE_USERNAME: ci
       SPRING_DATASOURCE_PASSWORD: ci-password
 
