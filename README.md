@@ -90,6 +90,37 @@
 | `rename:`           | 파일 또는 폴더명을 수정하거나 옮기는 작업만 수행한 경우                    |
 | `remove:`           | 파일을 삭제하는 작업만 수행한 경우                                         |
 
-## 🤖 AI 허용 범위
+## 📦 서버 공통 응답
 
-> AI 사용은 최대한 지양하며, 검증이 필요한 경우에만 사용합니다.
+모든 API 응답은 아래 형식으로 반환합니다.
+
+| 필드 | 타입 | 설명 |
+|:---|:---|:---|
+| `status` | `number` | HTTP 상태 코드 |
+| `code` | `string` | 성공 또는 에러 코드 |
+| `message` | `string` | 응답 메시지 |
+| `data` | `object \| null` | 응답 데이터. 데이터가 없거나 요청이 실패하면 `null` |
+
+### 성공 응답
+
+```json
+{
+  "status": 200,
+  "code": "{SUCCESS_CODE}",
+  "message": "{성공 메시지}",
+  "data": {}
+}
+```
+
+### 에러 응답
+
+```json
+{
+  "status": 400,
+  "code": "INVALID_INPUT",
+  "message": "유효하지 않은 값입니다.",
+  "data": null
+}
+```
+
+요청값 검증에 실패하면 `code`는 `INVALID_INPUT`이며, `message`에는 첫 번째 검증 실패 사유가 반환됩니다.
