@@ -1,6 +1,5 @@
 package sopt._39sopkathonserverandroid1.domain.mission.controller;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,7 +21,7 @@ public class MissionController implements MissionApi {
     @PostMapping("/v1/users/{userId}/missions")
     public CommonResponse<MissionCreateResponse> createMission(
             @PathVariable("userId") Long userId,
-            @Valid @RequestBody MissionCreateRequest request
+            @RequestBody MissionCreateRequest request
     ) {
         MissionCreateResponse response = missionService.createMission(userId, request);
         return CommonResponse.success(MissionSuccessCode.MISSION_CREATED, response);

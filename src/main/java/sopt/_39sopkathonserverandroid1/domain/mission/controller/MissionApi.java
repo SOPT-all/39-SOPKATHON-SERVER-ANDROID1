@@ -3,6 +3,7 @@ package sopt._39sopkathonserverandroid1.domain.mission.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import sopt._39sopkathonserverandroid1.domain.mission.dto.request.MissionCreateRequest;
 import sopt._39sopkathonserverandroid1.domain.mission.dto.response.MissionCreateResponse;
@@ -18,6 +19,6 @@ public interface MissionApi {
     CommonResponse<MissionCreateResponse> createMission(
             @Parameter(description = "미션을 제작하는 사용자 ID", example = "1")
             @Positive(message = "유효하지 않은 값입니다.") Long userId,
-            MissionCreateRequest request
+            @Valid MissionCreateRequest request
     );
 }
