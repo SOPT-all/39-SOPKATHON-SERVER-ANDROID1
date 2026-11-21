@@ -43,4 +43,14 @@ public class Mission extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private User user;
+
+    public static Mission create(Long userId, String title, String description, String instructions, String imageKey) {
+        Mission mission = new Mission();
+        mission.userId = userId;
+        mission.title = title;
+        mission.description = description;
+        mission.instructions = instructions;
+        mission.imageUrl = imageKey;
+        return mission;
+    }
 }

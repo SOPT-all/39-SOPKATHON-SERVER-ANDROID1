@@ -9,9 +9,9 @@ public record MissionDetailResponse(
         String description,
         String instructions
 ) {
-    public static MissionDetailResponse from(Mission mission) {
+    public static MissionDetailResponse from(Mission mission, String imageUrl) {
         return new MissionDetailResponse(
-                mission.getImageUrl(),
+                imageUrl,
                 mission.getUser().getName(),
                 mission.getTitle(),
                 mission.getDescription(),
@@ -19,4 +19,3 @@ public record MissionDetailResponse(
         );
     }
 }
-

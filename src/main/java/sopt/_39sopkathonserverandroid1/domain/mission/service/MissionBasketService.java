@@ -4,6 +4,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sopt._39sopkathonserverandroid1.domain.image.service.MissionImageUrlService;
 import sopt._39sopkathonserverandroid1.domain.mission.dto.response.IncompleteMissionResponse;
 import sopt._39sopkathonserverandroid1.domain.mission.repository.MissionBasketRepository;
 import sopt._39sopkathonserverandroid1.domain.user.exception.UserNotFoundException;
@@ -16,6 +17,7 @@ public class MissionBasketService {
 
     private final MissionBasketRepository missionBasketRepository;
     private final UserRepository userRepository;
+    private final MissionImageUrlService missionImageUrlService;
 
     public List<IncompleteMissionResponse> findIncompleteMissions(Long userId) {
         if (!userRepository.existsById(userId)) {
@@ -23,7 +25,9 @@ public class MissionBasketService {
         }
 
         return missionBasketRepository.findIncompleteByUserId(userId).stream()
-                .map(IncompleteMissionResponse::of)
+                .map(basket -> IncompleteMissionResponse.of(
+                        basket, missionImageUrlService.resolve(basket.getMission().getImageUrl())
+                ))
                 .toList();
     }
 }

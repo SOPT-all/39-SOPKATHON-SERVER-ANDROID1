@@ -4,9 +4,12 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import sopt._39sopkathonserverandroid1.domain.mission.code.MissionSuccessCode;
+import sopt._39sopkathonserverandroid1.domain.mission.dto.request.MissionCreateRequest;
+import sopt._39sopkathonserverandroid1.domain.mission.dto.response.MissionCreateResponse;
 import sopt._39sopkathonserverandroid1.domain.mission.dto.response.MissionDetailResponse;
 import sopt._39sopkathonserverandroid1.domain.mission.dto.response.MissionListResponse;
 import sopt._39sopkathonserverandroid1.domain.mission.exception.MissionNotFoundException;
@@ -16,13 +19,22 @@ import sopt._39sopkathonserverandroid1.global.swagger.ApiExceptions;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/missions")
 public class MissionController implements MissionApi {
 
     private final MissionService missionService;
 
     @Override
-    @GetMapping
+    @PostMapping("/v1/users/{userId}/missions")
+    public CommonResponse<MissionCreateResponse> createMission(
+            @PathVariable("userId") Long userId,
+            @RequestBody MissionCreateRequest request
+    ) {
+        MissionCreateResponse response = missionService.createMission(userId, request);
+        return CommonResponse.success(MissionSuccessCode.MISSION_CREATED, response);
+    }
+
+    @Override
+    @GetMapping("/missions")
     public CommonResponse<List<MissionListResponse>> findMissions() {
         List<MissionListResponse> response = missionService.findMissions();
 
@@ -33,7 +45,7 @@ public class MissionController implements MissionApi {
     }
 
     @Override
-    @GetMapping("/{missionId}")
+    @GetMapping("/missions/{missionId}")
     @ApiExceptions({MissionNotFoundException.class})
     public CommonResponse<MissionDetailResponse> getMissionDetail(
             @PathVariable("missionId") Long missionId

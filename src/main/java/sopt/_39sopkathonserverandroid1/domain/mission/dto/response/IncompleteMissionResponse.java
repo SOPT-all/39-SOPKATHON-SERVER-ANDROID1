@@ -23,13 +23,13 @@ public record IncompleteMissionResponse(
         LocalDateTime createdAt
 ) {
 
-    public static IncompleteMissionResponse of(MissionBasket basket) {
+    public static IncompleteMissionResponse of(MissionBasket basket, String imageUrl) {
         Mission mission = basket.getMission();
         return new IncompleteMissionResponse(
                 basket.getId(),
                 basket.getMissionId(),
                 mission.getTitle(),
-                mission.getImageUrl(),
+                imageUrl,
                 mission.getCreatedAt()
         );
     }
